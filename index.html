@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>График оплаты аренды</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart"></canvas>
+    <script>
+        function generateMonthYearList(startYear = 2023, startMonth = 7) {
+          const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+          const result = [];
+          let currentYear = startYear;
+          let currentMonth = startMonth;
+          const currentDate = new Date();
+          const currentYearCurrent = currentDate.getFullYear();
+          const currentMonthCurrent = currentDate.getMonth();
+
+          while (currentYear < currentYearCurrent || (currentYear === currentYearCurrent && currentMonth <= currentMonthCurrent)) {
+            result.push(`${monthNames[currentMonth]} ${currentYear}`);
+            currentMonth++;
+            if (currentMonth === 12) {
+              currentMonth = 0;
+              currentYear++;
+            }
+          }
+
+          return result;
+        }
+
+        // Получение списка месяцев с августа 2023 до текущего момента
+        const monthsList = generateMonthYearList();
+
+        // Данные из JSON файла или встроеные
+        const data = {
+            labels: monthsList,
+            datasets: [{
+                label: 'Оплата аренды',
+                data: new Array(monthsList.length).fill(15000),
+                borderColor: 'blue',
+                fill: false
+            }]
+        };
+
+        // Конфигурация графика
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                // Дополнительные настройки графика (подписи, цвета, масштаб и т.д.)
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Amount'
+                        }
+                    }
+                },
+                hover: {
+                    mode: 'index',
+                    intersec: false
+                }
+            }
+        };
+
+        // Создание графика
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
+</body>
+</html>
