@@ -9,16 +9,71 @@
 </head>
 <body>
     <section class="section">
+        <div class="container">
+            <div class="box">
+                <h1 class="title">Информация:</h1>
+                <table class="table">
+                        <tr>
+                            <th>
+                                Дата сделки
+                            </th>
+                            <td>
+                                <span id="start-date">30.07.2023</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Общая сумма сделки
+                            </th>
+                            <td>
+                                <span id="start-amount">400 000.00</span> ₽
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Процент кредитования
+                            </th>
+                            <td>
+                                <span id="percent">5</span>%
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Сумма с учетом %
+                            </th>
+                            <td>
+                                <span id="total_amount" class="tag is-success is-light"></span> ₽
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Мин. ежемесячная сумма погашения
+                            </th>
+                            <td>
+                                <span id="mounthly_pay" class="tag is-warning">15 000.00</span> ₽
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Погашено за всё время
+                            </th>
+                            <td>
+                                <span id="total_paid" class="tag is-success"></span>
+                            </td>
+                        </tr>
+                </table>
+                <h2>
+                    Остаток на <span id="current-month"></span> составляет <span id="balance" class="tag is-warning"></span> ₽
+                </h2>
+            </div>
+        </div>
+    </section>
+    <section class="section">
     <div class="container">
-      <h1 class="title">
-        Hello World
-      </h1>
-      <p class="subtitle">
-        My first website with <strong>Bulma</strong>!
-      </p>
+        <canvas id="myChart"></canvas>
     </div>
-  </section>
-    <canvas id="myChart"></canvas>
+    </section>
+        
     <script>
         function generateMonthYearList(startYear = 2023, startMonth = 7) {
           const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
