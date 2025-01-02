@@ -13,58 +13,69 @@
             <div class="box">
                 <h1 class="title">Информация:</h1>
                 <table class="table">
-                        <tr>
-                            <th>
-                                Дата сделки
-                            </th>
-                            <td>
-                                <span id="start-date">30.07.2023</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Общая сумма сделки
-                            </th>
-                            <td>
-                                <span id="start-amount">400 000.00</span> ₽
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Процент кредитования
-                            </th>
-                            <td>
-                                <span id="percent">5</span>%
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Сумма с учетом %
-                            </th>
-                            <td>
-                                <span id="total_amount" class="tag is-success is-light"></span> ₽
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Мин. ежемесячная сумма погашения
-                            </th>
-                            <td>
-                                <span id="mounthly_pay" class="tag is-warning">15 000.00</span> ₽
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Погашено за всё время
-                            </th>
-                            <td>
-                                <span id="total_paid" class="tag is-success"></span>
-                            </td>
-                        </tr>
+                    <tr>
+                        <th>
+                            Дата сделки
+                        </th>
+                        <td>
+                            <span id="deal-date">30.07.2023</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Общая сумма сделки
+                        </th>
+                        <td>
+                            <span id="start-amount">400 000.00</span> ₽
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Процент кредитования
+                        </th>
+                        <td>
+                            <span id="percent">8</span>%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Сумма с учетом %
+                        </th>
+                        <td>
+                            <span id="total-amount" class="tag is-success is-light"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Дата начала
+                        </th>
+                        <td>
+                            <span id="start-date">08.08.2023</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Мин. ежемесячная сумма погашения
+                        </th>
+                        <td>
+                            <span id="mounthly-pay" class="tag is-warning">15 000.00</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Погашено за всё время
+                        </th>
+                        <td>
+                            <span id="total-paid" class="tag is-success"></span>
+                        </td>
+                    </tr>
                 </table>
-                <h2>
-                    Остаток на <span id="current-month"></span> составляет <span id="balance" class="tag is-warning"></span> ₽
-                </h2>
+                <p>
+                    Остаток на <span id="current-month"></span> составляет <span id="balance" class="tag is-warning"></span>
+                </p>
+                <p>
+                    Ориентировочная дата полного погащения: <strong id="end-date"></strong>
+                </p>
             </div>
         </div>
     </section>
@@ -73,7 +84,51 @@
         <canvas id="myChart"></canvas>
     </div>
     </section>
-        
+    <script>
+        function calculateTotalAmount() {
+            let amount = document.getElementById("start-amount").innerHTML
+            amount = parseInt(amount.replaceAll(" ", ""), 10)
+            let percent = document.getElementById("percent").innerHTML
+            percent = parseInt(percent.replaceAll(" ", ""), 10)
+            let totalAmountElement = document.getElementById("total-amount")
+            let totalAmount = 0
+
+            totalAmount = amount + (amount * (percent / 100))
+            totalAmountElement.setAttribute("value", totalAmount)
+            totalAmountElement.innerHTML = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(totalAmount)
+        }
+
+        function calculateTotalPaid() {
+            const startDate = new Date(document.getElementById("start-date").innerHTML)
+            const currentDate = new Date
+            const payment = parseInt(document.getElementById("mounthly-pay").innerHTML.replaceAll(" ", ""), 10)
+            const months = getMonthsDiffBetweenDates(startDate, currentDate)
+
+            let totalPaid = months * payment
+            let totalPaidElement = document.getElementById("total-paid")
+            totalPaidElement.setAttribute("value", totalPaid)
+            totalPaidElement.innerHTML = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(totalPaid)
+        }
+
+        const getMonthsDiffBetweenDates = (dateInitial, dateFinal) =>
+          Math.max(
+            (dateFinal.getFullYear() - dateInitial.getFullYear()) * 12 +
+              dateFinal.getMonth() -
+              dateInitial.getMonth(),
+            0
+          )
+
+        function calculateBalance() {
+            const totalAmount = parseInt(document.getElementById("total-amount").getAttribute("value"), 10)
+            const totalPaid  = parseInt(document.getElementById("total-paid").getAttribute("value"), 10)
+            const balance = totalAmount - totalPaid
+            document.getElementById("balance").innerHTML = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(balance)
+        }
+
+        calculateTotalAmount()
+        calculateTotalPaid()
+        calculateBalance()
+    </script>
     <script>
         function generateMonthYearList(startYear = 2023, startMonth = 7) {
           const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
