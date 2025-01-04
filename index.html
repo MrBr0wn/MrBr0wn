@@ -42,7 +42,7 @@
                             Сумма с учетом %
                         </th>
                         <td>
-                            <span id="total-amount" class="tag is-success is-light"></span>
+                            <span id="total-amount" value="0" class="tag is-success is-light"></span>
                         </td>
                     </tr>
                     <tr>
@@ -50,7 +50,7 @@
                             Дата начала
                         </th>
                         <td>
-                            <span id="start-date">08.08.2023</span>
+                            <span id="start-date">8/8/2023</span>
                         </td>
                     </tr>
                     <tr>
@@ -66,7 +66,7 @@
                             Погашено за всё время
                         </th>
                         <td>
-                            <span id="total-paid" class="tag is-success"></span>
+                            <span id="total-paid" class="tag is-success" value="0"></span>
                         </td>
                     </tr>
                 </table>
@@ -122,6 +122,7 @@
             const totalAmount = parseInt(document.getElementById("total-amount").getAttribute("value"), 10)
             const totalPaid  = parseInt(document.getElementById("total-paid").getAttribute("value"), 10)
             const balance = totalAmount - totalPaid
+            
             document.getElementById("balance").innerHTML = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(balance)
         }
 
