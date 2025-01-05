@@ -126,9 +126,17 @@
             document.getElementById("balance").innerHTML = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(balance)
         }
 
+        function getCurrentMonth() {
+            const element = document.getElementById("current-month")
+            const currentMonth = new Date().toLocaleString("ru-RU", {month: "long"})
+
+            element.innerHTML = `<strong>${currentMonth}</strong>`
+        }
+
         calculateTotalAmount()
         calculateTotalPaid()
         calculateBalance()
+        getCurrentMonth()
     </script>
     <script>
         function generateMonthYearList(startYear = 2023, startMonth = 7) {
